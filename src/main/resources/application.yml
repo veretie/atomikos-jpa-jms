@@ -1,5 +1,11 @@
-spring:
+management.endpoints.web.exposure.include: hawtio,jolokia
+hawtio.authenticationEnabled: false
 
+activemq:
+  broker.url: "tcp://0.0.0.0:61616"
+  queue.name: "names"
+
+spring:
   datasource:
     url: "jdbc:h2:mem:testdb"
     driverClassName: "org.h2.Driver"
@@ -13,6 +19,3 @@ spring:
       path: "/h2"
       settings.trace: false
       settings.web-allow-others: false
-
-activemq.broker.url: tcp://0.0.0.0:61616
-activemq.queue.name: tickets

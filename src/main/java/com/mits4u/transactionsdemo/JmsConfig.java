@@ -12,7 +12,7 @@ import org.springframework.jms.core.JmsTemplate;
 public class JmsConfig {
 
     @Value("${activemq.broker.url}")
-    String brokerUrl;
+    private String brokerUrl;
 
     @Bean
     public BrokerService broker() throws Exception {
