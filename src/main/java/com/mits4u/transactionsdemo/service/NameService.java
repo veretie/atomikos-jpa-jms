@@ -1,5 +1,7 @@
 package com.mits4u.transactionsdemo.service;
 
+import com.mits4u.transactionsdemo.service.error.SimulatedCheckedException;
+import com.mits4u.transactionsdemo.service.error.SimulatedRuntimeException;
 import com.mits4u.transactionsdemo.service.jms.JmsConsumer;
 import com.mits4u.transactionsdemo.service.jms.JmsProducer;
 import com.mits4u.transactionsdemo.service.jpa.Name;
@@ -8,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class NameService {
@@ -20,10 +25,18 @@ public class NameService {
     @Autowired
     private NamesDao namesDao;
 
-    public void addName(String name) {
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void addName__checkedException(String name) throws SimulatedCheckedException {
         jmsProducer.send(name);
         namesDao.save(Name.builder().name(name).build());
-        log.info("name={} added", name);
+        throw new SimulatedCheckedException("simulated checked exception fail");
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void addName__runtimeException(String name) {
+        jmsProducer.send(name);
+        namesDao.save(Name.builder().name(name).build());
+        throw new SimulatedRuntimeException("simulated RuntimeException fail");
     }
 
 }
