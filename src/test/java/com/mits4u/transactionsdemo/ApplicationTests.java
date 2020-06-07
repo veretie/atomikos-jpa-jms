@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,12 +30,32 @@ class ApplicationTests {
 
 
     @Test
-    void testHappyPath() throws MalformedURLException {
+    void test__HappyPath() throws MalformedURLException {
 
         base = new URL("http://localhost:" + port + "/demo/success?name=aait");
         ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    }
+
+    @Test
+    void test__failCheckedException() throws MalformedURLException {
+
+        base = new URL("http://localhost:" + port + "/demo/cExc?name=baddy");
+        ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+    }
+
+    @Test
+    void test__failRuntimeException() throws MalformedURLException {
+
+        base = new URL("http://localhost:" + port + "/demo/rExc?name=baddy");
+        ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
     }
 

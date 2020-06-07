@@ -3,6 +3,7 @@ package com.mits4u.transactionsdemo;
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.atomikos.icatch.jta.UserTransactionManager;
 import com.atomikos.jms.AtomikosConnectionFactoryBean;
+import com.mits4u.transactionsdemo.service.jms.AsyncJmsErrorHandler;
 import org.apache.activemq.ActiveMQXAConnectionFactory;
 import org.apache.activemq.RedeliveryPolicy;
 import org.apache.activemq.broker.BrokerService;
@@ -80,7 +81,7 @@ public class AtomikosConfig {
     //The Atomikos JTA-enabled JmsConnectionFactory, configured with the vendor's XA factory.
     @Bean(initMethod = "init", destroyMethod = "close")
     @DependsOn("embeddedBroker")
-    public AtomikosConnectionFactoryBean atomikosConnectionFactory(){
+    public AtomikosConnectionFactoryBean atomikosConnectionFactory() {
         var factoryBean = new AtomikosConnectionFactoryBean();
         factoryBean.setUniqueResourceName("ACTIVEMQ_BROKER");
         factoryBean.setXaConnectionFactory(actimeMqXaFactory());
@@ -90,20 +91,21 @@ public class AtomikosConfig {
     // JMS producer using Atomikos
     @Bean
     public JmsTemplate jmsTemplate() {
-         var jmsTemplate = new JmsTemplate();
-         jmsTemplate.setConnectionFactory(atomikosConnectionFactory());
-         jmsTemplate.setSessionTransacted(true);
-         jmsTemplate.setReceiveTimeout(1000);
-         return jmsTemplate;
+        var jmsTemplate = new JmsTemplate();
+        jmsTemplate.setConnectionFactory(atomikosConnectionFactory());
+        jmsTemplate.setSessionTransacted(true);
+        jmsTemplate.setReceiveTimeout(1000);
+        return jmsTemplate;
     }
 
     // JMS consumer using Atomikos
     @Bean
-    public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() throws SystemException {
+    public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(AsyncJmsErrorHandler eh) throws SystemException {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(atomikosConnectionFactory());
         factory.setTransactionManager(springJtaTransactionManager());
         factory.setSessionTransacted(true);
+        factory.setErrorHandler(eh);
         return factory;
     }
 

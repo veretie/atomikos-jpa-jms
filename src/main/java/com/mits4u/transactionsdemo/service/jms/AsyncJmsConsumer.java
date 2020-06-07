@@ -7,9 +7,9 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JmsConsumer {
+public class AsyncJmsConsumer {
 
-    private Logger log = LoggerFactory.getLogger(JmsConsumer.class);
+    private Logger log = LoggerFactory.getLogger(AsyncJmsConsumer.class);
 
     @JmsListener(destination = "${activemq.queue.name}")
     public void receive(String message) {
