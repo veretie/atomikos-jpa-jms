@@ -4,6 +4,7 @@ import com.atomikos.icatch.jta.UserTransactionImp;
 import com.atomikos.icatch.jta.UserTransactionManager;
 import com.atomikos.jms.AtomikosConnectionFactoryBean;
 import org.apache.activemq.ActiveMQXAConnectionFactory;
+import org.apache.activemq.RedeliveryPolicy;
 import org.apache.activemq.broker.BrokerService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -65,7 +66,14 @@ public class AtomikosConfig {
     @Bean
     public ActiveMQXAConnectionFactory actimeMqXaFactory() {
         var xaFactory = new ActiveMQXAConnectionFactory();
+
         xaFactory.setBrokerURL(brokerUrl);
+        var r = new RedeliveryPolicy();
+        r.setMaximumRedeliveries(2);
+        r.setRedeliveryDelay(5000);
+        r.setBackOffMultiplier(1.5);
+        xaFactory.setRedeliveryPolicy(r);
+        xaFactory.setMaxThreadPoolSize(3);
         return xaFactory;
     }
 
