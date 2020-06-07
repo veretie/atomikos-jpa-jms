@@ -27,21 +27,21 @@ public class NameService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void addName__checkedException(String name) throws SimulatedCheckedException {
         jmsProducer.send(name);
-//        namesDao.save(Name.builder().name(name).build());
+        namesDao.save(Name.builder().name(name).build());
         throw new SimulatedCheckedException("simulated checked exception fail");
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void addName__runtimeException(String name) {
         jmsProducer.send(name);
-//        namesDao.save(Name.builder().name(name).build());
+        namesDao.save(Name.builder().name(name).build());
         throw new SimulatedRuntimeException("simulated RuntimeException fail");
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void happyPath(String name) {
         jmsProducer.send(name);
-//        namesDao.save(Name.builder().name(name).build());
+        namesDao.save(Name.builder().name(name).build());
         log.info("added to DB and JMS");
     }
 

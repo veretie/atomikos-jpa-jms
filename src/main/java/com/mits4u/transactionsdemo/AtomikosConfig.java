@@ -1,4 +1,4 @@
-package com.mits4u.transactionsdemo.service.atomikos;
+package com.mits4u.transactionsdemo;
 
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.atomikos.icatch.jta.UserTransactionManager;
@@ -16,7 +16,7 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 import javax.transaction.SystemException;
 
 @Configuration
-public class JmsConfig {
+public class AtomikosConfig {
 
     @Value("${activemq.broker.url}")
     private String brokerUrl;
