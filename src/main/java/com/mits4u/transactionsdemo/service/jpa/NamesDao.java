@@ -10,10 +10,6 @@ public class NamesDao {
     @Resource
     private NamesRepository namesRepository;
 
-    public Name getName(String name) {
-        return namesRepository.findOneByName(name);
-    }
-
     public void save(Name name) {
         namesRepository.save(name);
     }

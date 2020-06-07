@@ -33,7 +33,7 @@ class ApplicationTests {
     @Test
     void testHappyPath() throws MalformedURLException {
 
-        base = new URL("http://localhost:" + port + "/demo/sucess?name=aait");
+        base = new URL("http://localhost:" + port + "/demo/success?name=aait");
         ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

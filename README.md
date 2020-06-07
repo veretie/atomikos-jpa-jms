@@ -18,7 +18,7 @@ Global transactions include:
 |--------------------------|----------------------------------------------------------------|
 | Embedded broker console      | http://localhost:8080/actuator/hawtio                                |
 | Embedded DB console          | http://localhost:8080/h2        |
-
+| Swagger UI                    | http://localhost:8080        |
 
 
 
