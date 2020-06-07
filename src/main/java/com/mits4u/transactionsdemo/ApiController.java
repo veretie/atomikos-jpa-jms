@@ -22,4 +22,9 @@ public class ApiController {
     public void rExc(@RequestParam(value = "name") String name) {
         nameService.addName__runtimeException(name);
     }
+
+    @GetMapping("demo/sucess")
+    public void sucess(@RequestParam(value = "name") String name) {
+        nameService.happyPath(name);
+    }
 }
