@@ -48,7 +48,7 @@ public class AtomikosConfig {
     }
 
     //Configure the Spring framework to use JTA transactions from Atomiko
-    @Bean
+    @Bean(name = "transactionManager")
     public JtaTransactionManager springJtaTransactionManager() throws SystemException {
         JtaTransactionManager jtaTransactionManager = new JtaTransactionManager();
         jtaTransactionManager.setTransactionManager(atomikosTransactionManager());
@@ -98,5 +98,9 @@ public class AtomikosConfig {
         factory.setSessionTransacted(true);
         return factory;
     }
+
+     /*
+        DB CONFIG - uses Spring "transactionManager" bean which is configured as JtaTransactionManager above
+     */
 
 }
