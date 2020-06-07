@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mits4u</groupId>
-	<artifactId>transactions-demo</artifactId>
+	<artifactId>atomikos-jpa-jms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>transactions-demo</name>
 	<description>Transactions demo</description>
