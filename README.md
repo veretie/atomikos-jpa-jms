@@ -3,14 +3,16 @@
 ### Overview
 Sandbox project to play with global transactions.
 
-## Run locally
+### Atomikos
+Spring transactions abstraction configured with [Atomikos JTA](https://www.atomikos.com/Documentation/SpringBootIntegration).
+Global transactions include:
+ * ActiveMQ (embedded) transactions
+ * JPA (embedded H2) transactions
 
-#### Build and deploy
- * BAU
+### Build, deploy, run locally
+ * Springboot BAU
 
-#### Test
-
-## Local environament 
+## Local environment 
   
 | Component | Endpoint | 
 |--------------------------|----------------------------------------------------------------|
